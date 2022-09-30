@@ -17,11 +17,11 @@ namespace Lottery.Entities.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //modelBuilder.Entity<Category>().HasData(
-            //    new Category() { Id = 1, Name = "類別A", DisplayOrder = 0 },
-            //    new Category() { Id = 2, Name = "類別B", DisplayOrder = 1 },
-            //    new Category() { Id = 3, Name = "類別C", DisplayOrder = 2 }
-            //    );
+            modelBuilder.Entity<Sample>().HasData(
+                new Sample() { Id = 1, Name = "類別A", Sort = 0, CreateDatetime=DateTime.Now },
+                new Sample() { Id = 2, Name = "類別B", Sort = 1, CreateDatetime = DateTime.Now },
+                new Sample() { Id = 3, Name = "類別C", Sort = 2, CreateDatetime = DateTime.Now }
+                );
 
             //Can add constraint, index, check, data type, and even data seed
         }

@@ -1,6 +1,10 @@
 using Lottery.Entities.Models;
+using Lottery.Services.Services;
 
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
+
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,8 +13,20 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "抽獎系統API",
+        Description = "尾牙抽獎使用",
+        Version = "v1"
+    });
+    // 加入xml檔案到swagger
+    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    c.IncludeXmlComments(xmlPath);
+});
+     
 //DB 連線
 builder.Services.AddDbContext<LotteryDbContext>(options =>
 options.UseSqlServer(
@@ -22,7 +38,7 @@ options.UseSqlServer(
 builder.Services.AddTransient<LotteryDbContext>();
 #endregion
 #region 注冊service
-//builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<ISampleService, SampleService>();
 #endregion
 
 var app = builder.Build();
