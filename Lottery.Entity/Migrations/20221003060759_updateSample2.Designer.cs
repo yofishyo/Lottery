@@ -4,6 +4,7 @@ using Lottery.Entities.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Lottery.Entities.Migrations
 {
     [DbContext(typeof(LotteryDbContext))]
-    partial class LotteryDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221003060759_updateSample2")]
+    partial class updateSample2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -36,8 +38,7 @@ namespace Lottery.Entities.Migrations
 
                     b.Property<string>("Description")
                         .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)")
-                        .HasComment("描述");
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<bool>("IsDelete")
                         .HasColumnType("bit");
@@ -45,21 +46,18 @@ namespace Lottery.Entities.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)")
-                        .HasComment("名稱");
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<int>("Sort")
                         .HasColumnType("int")
                         .HasComment("排序");
 
                     b.Property<DateTime?>("UpdateDatetime")
-                        .HasColumnType("datetime2")
-                        .HasComment("異動時間");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("UpdateUserId")
                         .HasMaxLength(50)
-                        .HasColumnType("char(50)")
-                        .HasComment("異動者");
+                        .HasColumnType("char(50)");
 
                     b.HasKey("Id");
 
@@ -69,7 +67,7 @@ namespace Lottery.Entities.Migrations
                         new
                         {
                             Id = 1,
-                            CreateDatetime = new DateTime(2022, 10, 3, 14, 10, 6, 587, DateTimeKind.Local).AddTicks(9191),
+                            CreateDatetime = new DateTime(2022, 10, 3, 14, 7, 59, 671, DateTimeKind.Local).AddTicks(4729),
                             IsDelete = false,
                             Name = "類別A",
                             Sort = 0
@@ -77,7 +75,7 @@ namespace Lottery.Entities.Migrations
                         new
                         {
                             Id = 2,
-                            CreateDatetime = new DateTime(2022, 10, 3, 14, 10, 6, 587, DateTimeKind.Local).AddTicks(9210),
+                            CreateDatetime = new DateTime(2022, 10, 3, 14, 7, 59, 671, DateTimeKind.Local).AddTicks(4742),
                             IsDelete = false,
                             Name = "類別B",
                             Sort = 1
@@ -85,7 +83,7 @@ namespace Lottery.Entities.Migrations
                         new
                         {
                             Id = 3,
-                            CreateDatetime = new DateTime(2022, 10, 3, 14, 10, 6, 587, DateTimeKind.Local).AddTicks(9211),
+                            CreateDatetime = new DateTime(2022, 10, 3, 14, 7, 59, 671, DateTimeKind.Local).AddTicks(4742),
                             IsDelete = false,
                             Name = "類別C",
                             Sort = 2

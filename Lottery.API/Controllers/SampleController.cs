@@ -60,8 +60,8 @@ namespace Lottery.API.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("Create")]
-        [ProducesResponseType(typeof(SampleDto), (int)HttpStatusCode.OK)]
-        public ActionResult Create(SampleDto dto)
+        [ProducesResponseType(typeof(bool), (int)HttpStatusCode.OK)]
+        public ActionResult Create(SampleInputDto dto)
         {
             var result = _sampleService.Create(dto);
             return Ok(result);

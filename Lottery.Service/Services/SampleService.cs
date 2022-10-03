@@ -17,7 +17,7 @@ namespace Lottery.Services.Services
             _db = db;
         }
 
-        public bool Create(SampleDto dto)
+        public bool Create(SampleInputDto dto)
         {
             var efData = Map(dto);
 
@@ -27,12 +27,14 @@ namespace Lottery.Services.Services
             return result > 0 ? true : false;
         }
 
-        private Sample Map(SampleDto dto)
+        private Sample Map(SampleInputDto dto)
         {
             var ef = new Sample
             {
                 Name = dto.Name,
-                CreateDatetime = DateTime.Now
+                Description = dto.Description,
+                CreateDatetime = DateTime.Now,
+                Sort=dto.Sort,
             };
 
             return ef;
@@ -117,7 +119,7 @@ namespace Lottery.Services.Services
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
-        bool Create(SampleDto dto);
+        bool Create(SampleInputDto dto);
 
         /// <summary>
         /// 修改

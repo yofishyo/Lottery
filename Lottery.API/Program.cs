@@ -8,11 +8,10 @@ using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+#region 註冊swagger、相關設定
+//設定詳情參閱：https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo
@@ -26,7 +25,8 @@ builder.Services.AddSwaggerGen(c =>
     var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
     c.IncludeXmlComments(xmlPath);
 });
-     
+#endregion
+
 //DB 連線
 builder.Services.AddDbContext<LotteryDbContext>(options =>
 options.UseSqlServer(
@@ -34,10 +34,10 @@ options.UseSqlServer(
                   //Migrations的專案位置
                   b => b.MigrationsAssembly("Lottery.Entities")));
 
-#region 注冊DB
+#region 注入DB
 builder.Services.AddTransient<LotteryDbContext>();
 #endregion
-#region 注冊service
+#region 注入service
 builder.Services.AddScoped<ISampleService, SampleService>();
 #endregion
 
