@@ -1,6 +1,7 @@
 using Lottery.Entities.Models;
 using Lottery.Services.Services;
 
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
@@ -53,6 +54,16 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+//Exception Handling
+app.UseExceptionHandler(c => c.Run(async context =>
+{
+    var exceptionHandlerPathFeature = context.Features.Get<IExceptionHandlerPathFeature>();
+    var exception = exceptionHandlerPathFeature.Error;
+
+    await context.Response.WriteAsJsonAsync(new { error = exception.Message });
+}));
+
 
 app.MapControllers();
 
