@@ -1,6 +1,7 @@
 ﻿using Lottery.DataModels.Models;
 using Lottery.Services.Services;
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -47,6 +48,7 @@ namespace Lottery.API.Controllers
         [HttpGet]
         [Route("GetAll")]
         [Produces("application/json")]
+        [Authorize]
         public ActionResult<List<SampleDto>> GetAll()
         {
             var list = _sampleService.GetAll();

@@ -1,13 +1,18 @@
 using Lottery.Entities.Models;
 using Lottery.Services.Services;
 
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
 using System.Reflection;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
+ConfigurationManager configuration = builder.Configuration;
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -38,7 +43,37 @@ options.UseSqlServer(
 #region ª`¤JDB
 //builder.Services.AddTransient<LotteryDbContext>();
 #endregion
+
 #region ª`¤Jservice
+#region JWT Authentication
+// For Identity
+builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+    .AddEntityFrameworkStores<LotteryDbContext>()
+    .AddDefaultTokenProviders();
+
+// Adding Authentication
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+// Adding Jwt Bearer
+.AddJwtBearer(options =>
+{
+    options.SaveToken = true;
+    options.RequireHttpsMetadata = false;
+    options.TokenValidationParameters = new TokenValidationParameters()
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidAudience = configuration["JWT:ValidAudience"],
+        ValidIssuer = configuration["JWT:ValidIssuer"],
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:Secret"]))
+    };
+});
+#endregion
+
 builder.Services.AddScoped<ISampleService, SampleService>();
 #endregion
 
@@ -53,6 +88,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+// Authentication & Authorization
+app.UseAuthentication();
 app.UseAuthorization();
 
 //Exception Handling

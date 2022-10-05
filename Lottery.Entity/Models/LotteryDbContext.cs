@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 using System;
 using System.Collections.Generic;
@@ -8,22 +10,23 @@ using System.Threading.Tasks;
 
 namespace Lottery.Entities.Models
 {
-    public class LotteryDbContext: DbContext
+    public class LotteryDbContext : IdentityDbContext<IdentityUser>
     {
-        public LotteryDbContext(DbContextOptions options) : base(options)
+        public LotteryDbContext(DbContextOptions<LotteryDbContext> options) : base(options)
         {
 
         }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        //Can add constraint, index, check, data type, and even data seed
+        protected override void OnModelCreating(ModelBuilder builder)
         {
-            modelBuilder.Entity<Sample>().HasData(
+            builder.Entity<Sample>().HasData(
                 new Sample() { Id = 1, Name = "類別A", Sort = 0, CreateDatetime=DateTime.Now },
                 new Sample() { Id = 2, Name = "類別B", Sort = 1, CreateDatetime = DateTime.Now },
                 new Sample() { Id = 3, Name = "類別C", Sort = 2, CreateDatetime = DateTime.Now }
                 );
 
-            //Can add constraint, index, check, data type, and even data seed
+            base.OnModelCreating(builder);            
         }
 
         public DbSet<Sample> Sample { get; set; }
