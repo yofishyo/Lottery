@@ -36,7 +36,7 @@ options.UseSqlServer(
                   b => b.MigrationsAssembly("Lottery.Entities")));
 
 #region ª`¤JDB
-builder.Services.AddTransient<LotteryDbContext>();
+//builder.Services.AddTransient<LotteryDbContext>();
 #endregion
 #region ª`¤Jservice
 builder.Services.AddScoped<ISampleService, SampleService>();

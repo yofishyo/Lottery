@@ -53,12 +53,13 @@ namespace Lottery.Services.Services
 
         public List<SampleDto> GetAll()
         {
-            var result = _db.Sample
+            var result = _db.Sample.Where(x=>!x.IsDelete)
                                 .Select(x => new SampleDto
                                 {
                                     Id = x.Id,
                                     Name = x.Name,
                                     Sort = x.Sort,
+                                    IsDelete=x.IsDelete
                                 }).ToList();
 
             return result;
@@ -66,12 +67,13 @@ namespace Lottery.Services.Services
 
         public SampleDto Get(int id)
         {      
-            var result = _db.Sample.Where(x => x.Id == id)
+            var result = _db.Sample.Where(x => x.Id == id && !x.IsDelete)
                  .Select(x => new SampleDto
                  {
                      Id = x.Id,
                      Name = x.Name,
                      Sort = x.Sort,
+                     IsDelete = x.IsDelete
                  }).FirstOrDefault();
 
             return result;
