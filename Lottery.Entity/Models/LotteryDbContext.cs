@@ -20,13 +20,14 @@ namespace Lottery.Entities.Models
         //Can add constraint, index, check, data type, and even data seed
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            base.OnModelCreating(builder);
+
+            //Sample的初始資料
             builder.Entity<Sample>().HasData(
                 new Sample() { Id = 1, Name = "類別A", Sort = 0, CreateDatetime=DateTime.Now },
                 new Sample() { Id = 2, Name = "類別B", Sort = 1, CreateDatetime = DateTime.Now },
                 new Sample() { Id = 3, Name = "類別C", Sort = 2, CreateDatetime = DateTime.Now }
-                );
-
-            base.OnModelCreating(builder);            
+                );            
         }
 
         public DbSet<Sample> Sample { get; set; }

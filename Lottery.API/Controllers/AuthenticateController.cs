@@ -1,5 +1,6 @@
 ﻿using Lottery.DataModels.Models.JWTAuthentication;
 using Lottery.Entities.Models;
+using Lottery.Utility.Extensions;
 
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -85,8 +86,9 @@ namespace Lottery.API.Controllers
             IdentityUser user = new()
             {
                 //Email = model.Email,
+                Id = SequenceKeyGenerator.Generate(),
                 SecurityStamp = Guid.NewGuid().ToString(),
-                UserName = model.Username
+                UserName = model.Username,
             };
             var result = await _userManager.CreateAsync(user, model.Password);
             if (!result.Succeeded)
@@ -111,6 +113,7 @@ namespace Lottery.API.Controllers
             IdentityUser user = new()
             {
                 //Email = model.Email,
+                Id = SequenceKeyGenerator.Generate(),
                 SecurityStamp = Guid.NewGuid().ToString(),
                 UserName = model.Username
             };
