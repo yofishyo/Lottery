@@ -32,8 +32,13 @@ namespace Lottery.API.Controllers
             _configuration = configuration;
         }
 
+        /// <summary>
+        /// 登入
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
-        [Route("login")]
+        [Route("Login")]
         public async Task<IActionResult> Login([FromBody] LoginModel model)
         {
             var user = await _userManager.FindByNameAsync(model.Username);
@@ -64,8 +69,13 @@ namespace Lottery.API.Controllers
             return Unauthorized();
         }
 
+        /// <summary>
+        /// 一般人員 註冊
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
-        [Route("register")]
+        [Route("Register")]
         public async Task<IActionResult> Register([FromBody] RegisterModel model)
         {
             var userExists = await _userManager.FindByNameAsync(model.Username);
@@ -85,8 +95,13 @@ namespace Lottery.API.Controllers
             return Ok(new Response { Status = "Success", Message = "帳號建立成功" });
         }
 
+        /// <summary>
+        /// 管理員 註冊
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
-        [Route("register-admin")]
+        [Route("RegisterAdmin")]
         public async Task<IActionResult> RegisterAdmin([FromBody] RegisterModel model)
         {
             var userExists = await _userManager.FindByNameAsync(model.Username);
@@ -119,6 +134,11 @@ namespace Lottery.API.Controllers
             return Ok(new Response { Status = "Success", Message = "User created successfully!" });
         }
 
+        /// <summary>
+        /// 取得token
+        /// </summary>
+        /// <param name="authClaims"></param>
+        /// <returns></returns>
         private JwtSecurityToken GetToken(List<Claim> authClaims)
         {
             var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
@@ -126,7 +146,7 @@ namespace Lottery.API.Controllers
             var token = new JwtSecurityToken(
                 issuer: _configuration["JWT:ValidIssuer"],
                 audience: _configuration["JWT:ValidAudience"],
-                expires: DateTime.Now.AddHours(3),
+                expires: DateTime.Now.AddHours(3), //TODO：待確認token到期時間
                 claims: authClaims,
                 signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
                 );

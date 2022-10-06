@@ -14,35 +14,12 @@ using System.Text;
 var builder = WebApplication.CreateBuilder(args);
 ConfigurationManager configuration = builder.Configuration;
 
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-#region 註冊swagger、相關設定
-//設定詳情參閱：https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddSwaggerGen(c =>
-{
-    c.SwaggerDoc("v1", new OpenApiInfo
-    {
-        Title = "抽獎系統API",
-        Description = "尾牙抽獎使用",
-        Version = "v1"
-    });
-    // 加入xml檔案到swagger
-    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-    c.IncludeXmlComments(xmlPath);
-});
-#endregion
-
 //DB 連線
 builder.Services.AddDbContext<LotteryDbContext>(options =>
 options.UseSqlServer(
                   builder.Configuration.GetConnectionString("DefaultConnection"),
                   //Migrations的專案位置
                   b => b.MigrationsAssembly("Lottery.Entities")));
-
-#region 注入DB
-//builder.Services.AddTransient<LotteryDbContext>();
-#endregion
 
 #region 注入service
 #region JWT Authentication
@@ -77,6 +54,25 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddScoped<ISampleService, SampleService>();
 #endregion
 
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+#region 註冊swagger、相關設定
+//設定詳情參閱：https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "抽獎系統API",
+        Description = "尾牙抽獎使用",
+        Version = "v1"
+    });
+    // 加入xml檔案到swagger
+    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    c.IncludeXmlComments(xmlPath);
+});
+#endregion
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -101,7 +97,5 @@ app.UseExceptionHandler(c => c.Run(async context =>
     await context.Response.WriteAsJsonAsync(new { error = exception.Message });
 }));
 
-
 app.MapControllers();
-
 app.Run();

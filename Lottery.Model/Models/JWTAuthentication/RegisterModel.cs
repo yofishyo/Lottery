@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace Lottery.DataModels.Models.JWTAuthentication
 {
+    /// <summary>
+    /// 註冊
+    /// </summary>
     public class RegisterModel
     {
         /// <summary>

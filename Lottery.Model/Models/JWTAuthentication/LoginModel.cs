@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace Lottery.DataModels.Models.JWTAuthentication
 {
+    /// <summary>
+    /// 登入
+    /// </summary>
     public class LoginModel
     {
         /// <summary>

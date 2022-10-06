@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Lottery.Entities.Models
 {
+    /// <summary>
+    /// User角色
+    /// </summary>
     public class UserRoles
     {
         public const string Admin = "Admin";
