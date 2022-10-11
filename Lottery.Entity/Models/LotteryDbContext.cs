@@ -31,5 +31,6 @@ namespace Lottery.Entities.Models
         }
 
         public DbSet<Sample> Sample { get; set; }
+        public DbSet<ActionLog> ActionLog { get; set; }
     }
 }

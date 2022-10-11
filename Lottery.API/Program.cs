@@ -50,8 +50,9 @@ builder.Services.AddAuthentication(options =>
     };
 });
 #endregion
-
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ISampleService, SampleService>();
+builder.Services.AddScoped<IActionLogService, ActionLogService>();
 #endregion
 
 builder.Services.AddControllers();

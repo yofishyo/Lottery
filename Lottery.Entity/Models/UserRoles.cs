@@ -12,11 +12,11 @@ namespace Lottery.Entities.Models
     public class UserRoles
     {
         /// <summary>
-        /// 管理者
+        /// 管理者(主管)
         /// </summary>
         public const string Admin = "Admin";
         /// <summary>
-        /// 一般使用者
+        /// 一般使用者(工作人員)
         /// </summary>
         public const string User = "User";
     }

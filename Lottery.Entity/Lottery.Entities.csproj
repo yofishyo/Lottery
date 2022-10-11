@@ -20,4 +20,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Lottery.Utility\Lottery.Utility.csproj" />
+  </ItemGroup>
+
 </Project>

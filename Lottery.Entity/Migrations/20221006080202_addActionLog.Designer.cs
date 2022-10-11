@@ -4,6 +4,7 @@ using Lottery.Entities.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Lottery.Entities.Migrations
 {
     [DbContext(typeof(LotteryDbContext))]
-    partial class LotteryDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221006080202_addActionLog")]
+    partial class addActionLog
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,72 +23,6 @@ namespace Lottery.Entities.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
-
-            modelBuilder.Entity("Lottery.Entities.Models.ActionLog", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("ActionName")
-                        .HasMaxLength(100)
-                        .HasColumnType("varchar(100)")
-                        .HasComment("程式Action名稱");
-
-                    b.Property<int>("ActionType")
-                        .HasColumnType("int")
-                        .HasComment("操作行為");
-
-                    b.Property<string>("AreaName")
-                        .HasMaxLength(100)
-                        .HasColumnType("varchar(100)")
-                        .HasComment("程式Area名稱");
-
-                    b.Property<string>("BrowserVersion")
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar(50)")
-                        .HasComment("瀏覽器版本");
-
-                    b.Property<string>("ControllerName")
-                        .HasMaxLength(100)
-                        .HasColumnType("varchar(100)")
-                        .HasComment("程式Controller名稱");
-
-                    b.Property<string>("IpAddress")
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar(50)")
-                        .HasComment("來源位址");
-
-                    b.Property<string>("LogDesc")
-                        .HasColumnType("nvarchar")
-                        .HasComment("操作記錄描述");
-
-                    b.Property<DateTime>("LogTime")
-                        .HasColumnType("datetime2")
-                        .HasComment("操作紀錄時間");
-
-                    b.Property<string>("Logger")
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)")
-                        .HasComment("功能名稱");
-
-                    b.Property<string>("MainId")
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar(50)")
-                        .HasComment("資料Id");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("char(50)")
-                        .HasComment("使用者識別碼");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ActionLog");
-                });
 
             modelBuilder.Entity("Lottery.Entities.Models.Sample", b =>
                 {
@@ -135,7 +71,7 @@ namespace Lottery.Entities.Migrations
                         new
                         {
                             Id = 1,
-                            CreateDatetime = new DateTime(2022, 10, 6, 16, 34, 32, 518, DateTimeKind.Local).AddTicks(5679),
+                            CreateDatetime = new DateTime(2022, 10, 6, 16, 2, 1, 980, DateTimeKind.Local).AddTicks(3884),
                             IsDelete = false,
                             Name = "類別A",
                             Sort = 0
@@ -143,7 +79,7 @@ namespace Lottery.Entities.Migrations
                         new
                         {
                             Id = 2,
-                            CreateDatetime = new DateTime(2022, 10, 6, 16, 34, 32, 518, DateTimeKind.Local).AddTicks(5693),
+                            CreateDatetime = new DateTime(2022, 10, 6, 16, 2, 1, 980, DateTimeKind.Local).AddTicks(3896),
                             IsDelete = false,
                             Name = "類別B",
                             Sort = 1
@@ -151,7 +87,7 @@ namespace Lottery.Entities.Migrations
                         new
                         {
                             Id = 3,
-                            CreateDatetime = new DateTime(2022, 10, 6, 16, 34, 32, 518, DateTimeKind.Local).AddTicks(5693),
+                            CreateDatetime = new DateTime(2022, 10, 6, 16, 2, 1, 980, DateTimeKind.Local).AddTicks(3897),
                             IsDelete = false,
                             Name = "類別C",
                             Sort = 2

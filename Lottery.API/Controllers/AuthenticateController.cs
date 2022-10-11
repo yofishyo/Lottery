@@ -49,6 +49,7 @@ namespace Lottery.API.Controllers
 
                 var authClaims = new List<Claim>
                 {
+                    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                     new Claim("Uid", user.Id),
                     new Claim("UserName", user.UserName),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
