@@ -56,20 +56,12 @@ builder.Services.AddScoped<IActionLogService, ActionLogService>();
 #endregion
 
 #region 允許CORS
-var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 builder.Services.AddCors(options =>
-{
-    options.AddPolicy(name: MyAllowSpecificOrigins,
-                      policy =>
-                      {
-                          policy
-                                          //.AllowAnyOrigin()  // Access-Control-Allow-Origin: *
-                                          .AllowCredentials()  // Access-Control-Allow-Credentials: true
-                                          .WithOrigins("http://localhost:3000/")  // Access-Control-Allow-Origin: 請求的 Origin 位置
-                                          .AllowAnyHeader()
-                                          .AllowAnyMethod();
-                      });
-});
+    options.AddDefaultPolicy(builder =>
+        builder.WithOrigins("http://localhost:3000")
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowCredentials()));
 #endregion
 
 builder.Services.AddControllers();
@@ -103,7 +95,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 //allow CORS
-app.UseCors(MyAllowSpecificOrigins);
+app.UseCors();
 
 // Authentication & Authorization
 app.UseAuthentication();
