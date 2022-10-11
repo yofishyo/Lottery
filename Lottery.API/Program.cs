@@ -54,6 +54,15 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddScoped<ISampleService, SampleService>();
 #endregion
 
+#region 允許CORS
+builder.Services.AddCors(options =>
+    options.AddDefaultPolicy(builder =>
+        builder.WithOrigins("http://localhost:3000") //允許前端的來源IP
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowCredentials()));
+#endregion
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 #region 註冊swagger、相關設定
@@ -81,6 +90,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+//allow CORS
+app.UseCors();
 
 app.UseHttpsRedirection();
 
