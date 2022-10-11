@@ -55,6 +55,23 @@ builder.Services.AddScoped<ISampleService, SampleService>();
 builder.Services.AddScoped<IActionLogService, ActionLogService>();
 #endregion
 
+#region 允許CORS
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+                      policy =>
+                      {
+                          policy
+                                          //.AllowAnyOrigin()  // Access-Control-Allow-Origin: *
+                                          .AllowCredentials()  // Access-Control-Allow-Credentials: true
+                                          .WithOrigins("http://localhost:3000/")  // Access-Control-Allow-Origin: 請求的 Origin 位置
+                                          .AllowAnyHeader()
+                                          .AllowAnyMethod();
+                      });
+});
+#endregion
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 #region 註冊swagger、相關設定
@@ -84,6 +101,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+//allow CORS
+app.UseCors(MyAllowSpecificOrigins);
 
 // Authentication & Authorization
 app.UseAuthentication();
